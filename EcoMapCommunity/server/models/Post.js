@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const PostSchema = new mongoose.Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
-    aiSummary: { type: String, default: "Đang chờ AI tóm tắt..." },
+    aiSummary: { type: String, default: "Đang chờ tóm tắt..." },
     location: {
         type: {
             type: String,
@@ -25,7 +25,7 @@ const PostSchema = new mongoose.Schema({
     createdAt: { type: Date, default: Date.now }
 });
 
-// Tạo index để tìm kiếm theo tọa độ địa lý (rất quan trọng cho Map)
+// Tạo index để tìm kiếm theo tọa độ địa lý
 PostSchema.index({ location: '2dsphere' });
 
 module.exports = mongoose.model('Post', PostSchema);
