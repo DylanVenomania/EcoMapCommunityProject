@@ -32,7 +32,7 @@ exports.createPost = async (req, res) => {
 // Lấy tất cả bài đăng để hiển thị lên bản đồ
 exports.getAllPosts = async (req, res) => {
     try {
-        const posts = await Post.find();
+        const posts = await Post.find().sort({ createdAt: -1 }); // Lấy hết và xếp bài mới lên đầu
         res.status(200).json(posts);
     } catch (error) {
         res.status(500).json({ message: "Lỗi khi lấy dữ liệu", error: error.message });
@@ -84,4 +84,17 @@ exports.updateStatus = async (req, res) => {
    catch (error) {
        res.status(500).json({ message: "Lỗi khi cập nhật trạng thái", error: error.message });
    }
+};
+
+//xoá bài báo cáo
+exports.deletePost = async (req, res) => {
+    try {
+        const post = await Post.findByIdAndDelete(req.params.id);
+        if (!post) {
+            return res.status(404).json({ message: "Không tìm thấy địa điểm cần xóa" });
+        }
+        res.status(200).json({ message: "Đã dọn dẹp và xóa báo cáo khỏi hệ thống thành công!" });
+    } catch (error) {
+        res.status(500).json({ message: "Lỗi khi xóa dữ liệu", error: error.message });
+    }
 };
