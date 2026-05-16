@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const postRoutes = require('./routes/postRoutes');
+const authRoutes = require('./routes/authRoutes');
 require('dotenv').config();
 
 const app = express();
@@ -21,6 +22,8 @@ app.get('/', (req, res) => {
     res.send('Server EcoMapCommunity đang hoạt động!');
 });
 app.use('/api/posts', postRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/posts', require('./routes/postRoutes'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
